@@ -46,8 +46,8 @@
 		  			var userid = arr[i].id; 
 		  			FB.api('/userid/tagged_places', 'get', function(resp) {
 		  				console.log('we made it to checkins!');
+		  				console.log(resp);
 		  				var tagged_places = resp.data;
-		  				console.log(tagged_places);
 		  				var j;
 		  				for (j = 0; j < tagged_places.length; j++) {
 		  					//console.log('got into tagged_places loop');
