@@ -33,7 +33,8 @@
 		function myFacebookLogin() {
 		  FB.login(function(){
 		  	//FB.api('/me/feed', 'post', {message: 'Hi'});
-		  	FB.api('/me/friends/','get', function(response) {
+		  	//FB.api('/me/friends/','get', function(response) {
+		  	FB.api('/me/tagged_places/','get', function(response) {
 		  		console.log('got into FB.api method!');
 		  		//var friendlist = JSON.parse(response);
 		  		var arr = response.data;
