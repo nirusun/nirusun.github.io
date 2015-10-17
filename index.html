@@ -38,8 +38,9 @@
 		  		//var friendlist = JSON.parse(response);
 		  		var lists = response.data;
 		  		console.log('got past var lists statement!');
-		  		for (var i in lists) {
-		  			console.log('hi');
+		  		var i;
+		  		for (i = 0; i < lists.length; i++) {
+		  			console.log('got into for loop');	
 		  		}
 		  	});
 		  		/*
