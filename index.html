@@ -33,7 +33,7 @@
 		function myFacebookLogin() {
 		  FB.login(function(){
 		  	//FB.api('/me/feed', 'post', {message: 'Hi'});
-		  	FB.api('/me/taggable_friends/','get', function(response) {
+		  	FB.api('/me/friends/','get', function(response) {
 		  		console.log('got into FB.api method!');
 		  		//var friendlist = JSON.parse(response);
 		  		var lists = response.data;
@@ -45,7 +45,7 @@
 		  			console.log('got into for loop');	
 		  		}
 		  	});
-		  }/*, {scope: 'user_friends'}*/);
+		  }, {scope: 'user_friends'});
 		}
 		
 		</script>
