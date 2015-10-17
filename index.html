@@ -33,10 +33,11 @@
 		function myFacebookLogin() {
 		  FB.login(function(){
 		  	//FB.api('/me/feed', 'post', {message: 'Hi'});
-		  	FB.api('/me/friendlists/members',/*'get',*/ function(response) {
+		  	FB.api('/me/friendlists/','get', function(response) {
 		  		console.log('got into FB.api method!');
 		  		//var friendlist = JSON.parse(response);
 		  		var lists = response.data;
+		  		console.log(lists);
 		  		console.log(response.data.length);
 		  		console.log('got past var lists statement!');
 		  		var i;
