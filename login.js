@@ -77,15 +77,4 @@
 		        'Thanks for logging in, ' + response.name + '!';
 		    });
 		    */
-		  	FB.api('/me/friendlists',/*'get',*/ function(response) {
-		  		console.log('got into FB.api method!');
-		  		//var friendlist = JSON.parse(response);
-		  		var lists = response.data;
-		  		console.log(response.data);
-		  		console.log('got past var lists statement!');
-		  		var i;
-		  		for (i = 0; i < lists.length; i++) {
-		  			console.log('got into for loop');	
-		  		}
-		  	});
 		  }
