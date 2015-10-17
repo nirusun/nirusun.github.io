@@ -36,13 +36,23 @@
 		  	FB.api('/me/friends/','get', function(response) {
 		  		console.log('got into FB.api method!');
 		  		//var friendlist = JSON.parse(response);
-		  		var lists = response.data;
+		  		var arr = response.data;
 		  		console.log(lists);
 		  		console.log(response.data.length);
 		  		console.log('got past var lists statement!');
 		  		var i;
-		  		for (i = 0; i < lists.length; i++) {
-		  			console.log('got into for loop');	
+		  		for (i = 0; i < arr.length; i++) {
+		  			console.log('got into for loop');
+		  			var userid = arr[i].id; 
+		  			FB.api('/userid/checkins', 'get', function(resp) {
+		  				console.log('we made it to checkins!');
+		  			}); 
+		  			
+		  			
+		  			
+		  			
+		  			
+		  			
 		  		}
 		  	});
 		  }, {scope: 'user_friends'});
