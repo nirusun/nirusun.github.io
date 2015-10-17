@@ -32,8 +32,15 @@
 		<script>
 		function myFacebookLogin() {
 		  FB.login(function(){
-		  	FB.api('/me/feed', 'post', {message: 'Hi'});
-		  }, {scope: 'publish_actions'});
+		  	//FB.api('/me/feed', 'post', {message: 'Hi'});
+		  	FB.api('/me/friendlists', function(response) {
+		  		var friendlist = JSON.parse(response);
+		  		var i;
+		  		for (i = 0; i < friendlist.data.length; i++) {
+		  			window.alert(friendlist.data[i]);
+		  		}
+		  	});
+		  }, {scope: 'user_friends'});
 		}
 		</script>
 		<button onclick="myFacebookLogin()">Login with Facebook</button>
