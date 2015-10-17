@@ -33,15 +33,23 @@
 		function myFacebookLogin() {
 		  FB.login(function(){
 		  	//FB.api('/me/feed', 'post', {message: 'Hi'});
-		  	FB.api('/me/friendlists', function(response) {
-		  		var friendlist = JSON.parse(response);
-		  		var i;
-		  		for (i = 0; i < friendlist.data.length; i++) {
-		  			window.alert(friendlist.data[i]);
+		  	FB.api('/me/friendlists','get', function(response) {
+		  		console.log('got into FB.api method!');
+		  		//var friendlist = JSON.parse(response);
+		  		var lists = response.data;
+		  		for (var i in lists) {
+		  			console.log('hi');
 		  		}
 		  	});
+		  		/*
+		  		var i;
+		  		for (i = 0; i < friendlist.data.length; i++) {
+		  			console.log(friendlist.data[i]);
+		  		}
+		  		*/
 		  }, {scope: 'user_friends'});
 		}
+		
 		</script>
 		<button onclick="myFacebookLogin()">Login with Facebook</button>
 		
