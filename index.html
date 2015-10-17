@@ -23,6 +23,21 @@
 		</div>
 		
 		
+		
+		
+		
+		
+		
+		
+		<script>
+		function myFacebookLogin() {
+		  FB.login(function(){
+		  	FB.api('/me/feed', 'post', {message: 'Hi'});
+		  }, {scope: 'publish_actions'});
+		}
+		</script>
+		<button onclick="myFacebookLogin()">Login with Facebook</button>
+		
 	
 	</body>
 </html>
