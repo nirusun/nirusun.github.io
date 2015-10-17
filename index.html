@@ -46,7 +46,7 @@
 		  			var user = arr[i];
 		  			var userid = arr[i].id; 
 		  			console.log(userid);
-		  			FB.api('/user/tagged_places', 'get', function(resp) {
+		  			FB.api('/me/friends/user/tagged_places', 'get', function(resp) {
 		  				console.log('we made it to checkins!');
 		  				console.log(resp);
 		  				var tagged_places = resp.data;
