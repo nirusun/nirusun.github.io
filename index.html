@@ -44,8 +44,16 @@
 		  		for (i = 0; i < arr.length; i++) {
 		  			console.log('got into for loop');
 		  			var userid = arr[i].id; 
-		  			FB.api('/userid/checkins', 'get', function(resp) {
+		  			FB.api('/userid/tagged_places', 'get', function(resp) {
 		  				console.log('we made it to checkins!');
+		  				var tagged_places = resp.data;
+		  				var j;
+		  				for (j = 0; j < tagged_places.length; j++) {
+		  					//console.log('got into tagged_places loop');
+		  					var tagged_place = tagged_places[j];
+		  					console.log(tagged_place.created_time);
+		  					console.log(tagged_place.place);
+		  				}
 		  			}); 
 		  			
 		  			
