@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>The Onion Peeler</title>
+    </head>
+
+    <body>
+
+
+    </body>
+    
+    <script src="assets/vendors/jquery/jquery-2.1.1.min.js" rel="javascript"></script>
+    <script src="assets/js/ogre.js" rel="javascript"></script>
+    <script src="assets/js/libarticle/libarticle.js" rel="javascript"></script>
+    <script rel="javascript">
+        $(document).ready(function(){
+            var reddit = new ogre.Reddit();
+            
+            reddit.getArticles("/r/nottheonion/new.json")
+                .done(function(articles) {
+                    var article = articles[0];
+
+
+                    article.getContent(function(content) {
+                        console.log("first");
+                        console.log(content);
+
+                        article.getContent(function(content) {
+                            console.log("second");
+                            console.log(content);
+                        });
+                    });
+
+                    var list = [4, 3, 8, 2, 56, 78, 12];
+                    var randomArticles = ogre.selectRandom(list, 5);
+                    for (var i = 0; i < randomArticles.length; i++) {
+                        console.log(randomArticles[i]);
+                    }
+
+                    console.log(article);
+                });
+                
+            var onion = new ogre.TheOnion();
+            
+            onion.getArticles()
+                .done(function(articles) {
+                    console.log(articles);
+                });
+        });
+    </script>
+</html>

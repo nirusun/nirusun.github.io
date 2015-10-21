@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Online article differentiation game">
+    <meta name="author" content="UW Hackathon">
+    <!-- <link rel="icon" href="../../favicon.ico"> -->
+
+    <title>Onion Peeler</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/index.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--<script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="about.html">About</a></li>
+        </ul>
+        <h3 class="text-muted"><img src="assets/images/icon.png" />Onion Peeler</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Start Peeling!</h1>
+        <p class="lead">Are these articles from the Onion or not?</p>
+        <p id="score">Score: 0 out of 0 correct</p>
+      </div>
+
+      <div class="articlecontainer"> <!-- keeps articles -->
+        <!-- nuthin' -->
+      </div> <!-- end article container -->
+
+      <div class="footer">
+        <button id="NewRound" class="btn" type="button">New Round?</button>
+        <p>&copy; BluBambu 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+  </body>
+  
+    <script src="assets/vendors/jquery/jquery-2.1.1.min.js" rel="javascript"></script>
+    <script src="assets/js/ogre.js" rel="javascript"></script>
+    <script src="assets/js/libarticle/libarticle.js" rel="javascript"></script>
+    <script rel="javascript">
+        var scoreCorrect = 0
+        var scoreTotal = 0;
+        var articleList;
+        $(document).ready(function(){
+            $("#NewRound").click(newRound);
+            function answerYes(article, html, Yes) {
+                $(html).find("button").prop("disabled", true);
+
+                if(article.url.indexOf("theonion/daily") != -1 == Yes) {
+                    $(html).css("background-color", "#CCFFCC");
+                    scoreCorrect++;
+                    $(html).find(".content img").slideDown();
+                    article.getContent( function(content) {$(html).find("p.content").text(content.objects[0].text);});
+                } else {
+                    $(html).css("background-color", "#FFCCCC");
+                }
+                scoreTotal++;
+                $("#score").text("Score: " + scoreCorrect + " out of " + scoreTotal);
+            }
+
+            function articleToHTML(article) {
+              var yesButton = $("<button type=\"button\" class=\"btn yesbtn\">Yes</button>");
+              var noButton = $("<button type=\"button\" class=\"btn nobtn\">No</button>");
+              var html = $("<div class=\"article\">" +
+                         "<div class=\"buttons\">" +
+                         "</div>" +
+                         "<h4>" + article.title + "</h4>" +
+                         "<p class=\"content\"><img src=\"assets/images/throbber.gif\" /></p>" +
+                         "</div>");
+              $(html).find(".content img").hide();
+              $(html).find("div.buttons").append(yesButton).append(noButton);
+              
+              yesButton.click(function(event) { answerYes(article, html, true); });
+              noButton.click(function(event) { answerYes(article, html, false); });
+              return html;
+            }
+
+            var reddit = new ogre.Reddit();
+            var onion = new ogre.TheOnion();
+
+            $.when(
+              reddit.getArticles("/r/nottheonion/new.json"),
+              onion.getArticles()
+            )            
+            .done(function(redditArticles, onionArticles) {
+              articlesList = ogre.selectRandom(redditArticles, onionArticles.length).concat(ogre.selectRandom(onionArticles, onionArticles.length));
+              newRound();
+            });
+
+            function newRound() {
+              $("div.articlecontainer").empty();
+              var currentList = ogre.selectRandom(articlesList, Math.min(4, articlesList.length));
+              jQuery.each(currentList, function(i, article) {
+                var domElement = articleToHTML(article);
+                $("div.articlecontainer").append(domElement);
+              });
+            }
+        });
+    </script>
+</html>
